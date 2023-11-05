@@ -16,6 +16,9 @@ function getMove(){
 }
 
 function playGame(number){
+    let playerScore = 0;
+    let computerScore = 0;
+
     for(let i = 1; i <= number; i++){
         let input = prompt("Enter a move: ")
         let playerMove1 = input[0].toUpperCase()
@@ -29,27 +32,40 @@ function playGame(number){
         }
         else if (playerMove == "Rock" && computerMove == "Scissors"){
             message = "Rock beats Scissors. You win!";
+            playerScore++;
         }
         else if (playerMove == "Rock" && computerMove == "Paper"){
             message = "Paper beats Rock. You lose!";
+            computerScore++;
         }
         else if (playerMove == "Scissors" && computerMove == "Paper"){
             message = "Scissors beat Paper. You win!";
+            playerScore++;
         }
         else if (playerMove == "Scissors" && computerMove == "Rock"){
             message = "Rock beats Scissors. You lose!";
+            computerScore++;
         }
         else if (playerMove == "Paper" && computerMove == "Rock"){
             message = "Paper beats Rock. You win!";
+            playerScore++;
         }
         else if (playerMove == "Paper" && computerMove == "Scissors"){
             message = "Scissors beat Paper. You lose!";
+            computerScore++;
         }
         else {
             message = "Input error!";
             i--;
         }
         console.log(message)
+    }
+    if (playerScore > computerScore) {
+        console.log("You win the game with a score of " + playerScore + " to " + computerScore + "!");
+    } else if (computerScore > playerScore) {
+        console.log("You lose the game with a score of " + computerScore + " to " + playerScore + "!");
+    } else {
+        console.log("The game ends in a tie with a score of " + playerScore + " to " + computerScore + "!");
     }
 }
 
