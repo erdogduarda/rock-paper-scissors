@@ -14,60 +14,84 @@ function getMove(){
     }
     return move
 }
+let table = document.getElementById("table")
+let playerScoreElement = document.getElementById("scoreP")
+let computerScoreElement = document.getElementById("scoreC")
 
-function playGame(number){
-    let playerScore = 0;
-    let computerScore = 0;
+let message = document.getElementById("message")
+table.append(message)
 
-    for(let i = 1; i <= number; i++){
-        let input = prompt("Enter a move: ")
-        let playerMove1 = input[0].toUpperCase()
-        let playerMove2 = input.slice(1).toLowerCase()
-        let playerMove = playerMove1 + playerMove2
-        let computerMove = getMove()
-        let message = "";
+let playerScore = 0
+let computerScore = 0
 
-        if (playerMove == computerMove){
-            message = "It's a DRAW!";
-        }
-        else if (playerMove == "Rock" && computerMove == "Scissors"){
-            message = "Rock beats Scissors. You win!";
-            playerScore++;
-        }
-        else if (playerMove == "Rock" && computerMove == "Paper"){
-            message = "Paper beats Rock. You lose!";
-            computerScore++;
-        }
-        else if (playerMove == "Scissors" && computerMove == "Paper"){
-            message = "Scissors beat Paper. You win!";
-            playerScore++;
-        }
-        else if (playerMove == "Scissors" && computerMove == "Rock"){
-            message = "Rock beats Scissors. You lose!";
-            computerScore++;
-        }
-        else if (playerMove == "Paper" && computerMove == "Rock"){
-            message = "Paper beats Rock. You win!";
-            playerScore++;
-        }
-        else if (playerMove == "Paper" && computerMove == "Scissors"){
-            message = "Scissors beat Paper. You lose!";
-            computerScore++;
-        }
-        else {
-            message = "Input error!";
-            i--;
-        }
-        console.log(message)
+function updateScore(){
+    playerScoreElement.textContent = "Player Score: " + playerScore
+    computerScoreElement.textContent = "Computer Score: " + computerScore
+}
+
+function checkGameEnd(){
+    if(playerScore===5){
+        message.innerText = "Player wins the game! With the score of 5 against " + computerScore
+        resetGame()
     }
-    if (playerScore > computerScore) {
-        console.log("You win the game with a score of " + playerScore + " to " + computerScore + "!");
-    } else if (computerScore > playerScore) {
-        console.log("You lose the game with a score of " + computerScore + " to " + playerScore + "!");
-    } else {
-        console.log("The game ends in a tie with a score of " + playerScore + " to " + computerScore + "!");
+    else if (computerScore === 5) {
+        message.innerText = "Computer wins the game! With the score of 5 against " + playerScore
+        resetGame()
     }
 }
 
-let rounds = parseInt(prompt("Enter the number of rounds you wanna play: "))
-playGame(rounds)
+function resetGame() {
+    playerScore = 0
+    computerScore = 0
+    updateScore()
+}
+
+function playGame(pickOne){
+    let playerMove = pickOne
+    let computerMove = getMove()
+
+    if (playerMove == computerMove){
+        message.innerText = "It's a DRAW!";
+    }
+    else if (playerMove == "Rock" && computerMove == "Scissors"){
+        message.innerText = "Rock beats Scissors. You win!";
+        playerScore++;
+    }
+    else if (playerMove == "Rock" && computerMove == "Paper"){
+        message.innerText = "Paper beats Rock. You lose!";
+        computerScore++;
+    }
+    else if (playerMove == "Scissors" && computerMove == "Paper"){
+        message.innerText = "Scissors beat Paper. You win!";
+        playerScore++;
+    }
+    else if (playerMove == "Scissors" && computerMove == "Rock"){
+        message.innerText = "Rock beats Scissors. You lose!";
+        computerScore++;
+    }
+    else if (playerMove == "Paper" && computerMove == "Rock"){
+        message.innerText = "Paper beats Rock. You win!";
+        playerScore++;
+    }
+    else if (playerMove == "Paper" && computerMove == "Scissors"){
+        message.innerText = "Scissors beat Paper. You lose!";
+        computerScore++;
+    }
+    updateScore()
+    checkGameEnd()
+}
+
+const rock = document.getElementById("rock")
+rock.addEventListener('click', function() {
+    playGame("Rock")
+})
+
+const paper = document.getElementById("paper")
+paper.addEventListener('click', function() {
+    playGame("Paper")
+})
+
+const scissors = document.getElementById("scissors")
+scissors.addEventListener('click', function() {
+    playGame("Scissors")
+})
